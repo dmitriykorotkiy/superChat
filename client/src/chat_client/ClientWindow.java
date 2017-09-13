@@ -27,7 +27,7 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
     }
 
     private final JTextArea log = new JTextArea();
-    private final JTextField fieldNickName = new JTextField("bot");
+    private final JTextField fieldNickName = new JTextField("Пользователь");
     private final JTextField fieldInput = new JTextField();
 
     private TCPConnection connection;
