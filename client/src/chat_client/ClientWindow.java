@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ClientWindow extends JFrame implements ActionListener, TCPConnectionList{
 
@@ -29,6 +30,7 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
     private final JTextArea log = new JTextArea();
     private final JTextField fieldNickName = new JTextField("Пользователь");
     private final JTextField fieldInput = new JTextField();
+    private final JButton button = new JButton("HISTORY");
 
     private TCPConnection connection;
 
@@ -42,9 +44,30 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
         log.setLineWrap(true);
         fieldInput.addActionListener(this);
 
+
         add(log, BorderLayout.CENTER);
         add(fieldInput, BorderLayout.SOUTH);
         add(fieldNickName, BorderLayout.NORTH);
+        add(button,BorderLayout.EAST);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ChatHistory history = new ChatHistory();
+                history.createFrame();
+                try {
+                    ArrayList<String> listMsg = history.readHistory();
+                    for (int i = 0; i < listMsg.size(); i++) {
+                        String element = listMsg.get(i);
+                        history.printMsg(element);
+
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
+
 
         setVisible(true);
         try {
@@ -62,6 +85,7 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
         fieldInput.setText(null);
         connection.sendString(fieldNickName.getText()+ " : " +msg);
         connection.addToMsgHistory(fieldNickName.getText()+ " : " +msg);
+
     }
 
 
@@ -95,4 +119,5 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
             }
         }));
     }
+
 }
