@@ -10,8 +10,7 @@ import java.util.Scanner;
 
 public class ChatHistory {
 
-    private static final String FILE_NAME = "C:\\chat\\history.txt";
-    JTextArea textArea;
+    JTextArea msgHistory;
 
     public void createFrame() {
         EventQueue.invokeLater(new Runnable() {
@@ -24,14 +23,14 @@ public class ChatHistory {
                 JPanel panel = new JPanel();
                 panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
                 panel.setOpaque(true);
-                textArea = new JTextArea(30, 50);
-                textArea.setWrapStyleWord(true);
-                textArea.setEditable(false);
-                textArea.setFont(Font.getFont(Font.SANS_SERIF));
-                JScrollPane scroller = new JScrollPane(textArea);
+                msgHistory = new JTextArea(30, 50);
+                msgHistory.setWrapStyleWord(true);
+                msgHistory.setEditable(false);
+                msgHistory.setFont(Font.getFont(Font.SANS_SERIF));
+                JScrollPane scroller = new JScrollPane(msgHistory);
                 scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
                 scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-                DefaultCaret caret = (DefaultCaret) textArea.getCaret();
+                DefaultCaret caret = (DefaultCaret) msgHistory.getCaret();
                 caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
                 panel.add(scroller);
                 frame.getContentPane().add(BorderLayout.CENTER, panel);
@@ -56,12 +55,13 @@ public class ChatHistory {
         SwingUtilities.invokeLater((new Runnable() {
             @Override
             public void run() {
-                textArea.append(msg + " \n");
-                textArea.setCaretPosition(textArea.getDocument().getLength());
+                msgHistory.append(msg + " \n");
+                msgHistory.setCaretPosition(msgHistory.getDocument().getLength());
             }
         }));
 
     }
 }
+
 
 
